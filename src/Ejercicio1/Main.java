@@ -1,34 +1,21 @@
 package Ejercicio1;
 
-/*https://pacoportillo.es/informatica-avanzada/programacion-multiproceso/la-cena-de-los-filosofos/#_Toc519449457*/
-
 public class Main {
     public static void main(String[] args) {
-        // Se crea el Array para contener las 5 instancias de Palillos:
-        Palillo[] palillo = new Palillo[5];
-        // Se crea el Array para contener las 5 instancias de Filósofos:
-        Filosofo[] filosofo = new Filosofo[5];
-        // Se crea una sola instancia de Monitor:
-        MonitorComedor comensal = new MonitorComedor();
-        // Se crean las 5 instancias de Palillos:
-        for(int i=0; i<palillo.length; i++){
-            palillo[i] = new Palillo(i);
+        Silla s = new Silla();
+        Palillo[] palillos = new Palillo[5];
+        for (int i = 0; i < palillos.length; i++) {
+            palillos[i] = new Palillo(i);
         }
 
-        // Se crean las 5 instancias de Filósofos:
-        for(int i=0; i<filosofo.length; i++){
-            /* El filósofo coge el palillo de la izquierda
-             *  y el de la derecha se contabiliza con el módulo(%)
-             *  porque cuando llega a cuatro el siguiente es cero
-             */
-            // Ahora al filósofo se le pasa: un ID, un palillo Derecho, un palillo Izdo y el comensal
-            filosofo[i] = new Filosofo(i, palillo[i], palillo[(i+1)%5], comensal);
-
-        // Se echa a andar todos los Filósofos:
-        for(int j=0; j<filosofo.length; j++){
-            filosofo[j].start();
+        Filosofo[] filosofos = new Filosofo[5];
+        for (int i = 0; i < filosofos.length; i++) {
+            filosofos[i] = new Filosofo(i, palillos[i], palillos[(i + 1) % 5], s); //lo hacemos asi porque el segundo palillo solo llega a 4, el array va de 0 a 4 y por eso hacemos modulo
         }
-    }
+
+        for (int i = 0; i < filosofos.length; i++) {
+            filosofos[i].start();
+        }
 
     }
 }
